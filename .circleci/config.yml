@@ -1,0 +1,65 @@
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2.1
+# Use a package of configuration called an orb.
+references:
+  defaults: &defaults
+    working_directory: ~/grpc-gen
+    machine: true
+
+jobs:
+  lint:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Lint
+          command: docker-compose run --rm lint
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  build:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Clean up
+          command: rm -rf postservice_go userservice_go postservice_ts userservice_ts
+      - run:
+          name: Check dir
+          command: ls
+      - run:
+          name: Generate post gRPC Code for go
+          command: docker-compose run --rm go_post
+      - run:
+          name: Generate post gRPC Code for typescript
+          command: docker-compose run --rm ts_post
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  push:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: git config
+          command: |
+            git config user.email "faliplvsg@gmail.com"
+            git config user.name "Generator Bot"
+            git remote add upstream https://${GH_TOKEN}@github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git
+# Orchestrate or schedule a set of jobs
+workflows:
+  version: 2
+  build_and_push:
+    jobs:
+    - lint
+    - build:
+        requires:
+          - lint
+        # filters:
+        #   branches:
+        #     only:
+        #       - master
