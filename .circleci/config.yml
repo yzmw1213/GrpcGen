@@ -73,6 +73,7 @@ jobs:
             echo aaaaaa
             git -C ../go-src commit -m "AUTO GENERATED [ci skip]" || result=$?
             echo bbbbbb
+            echo $result
             if [ $result -eq 0 ]; then
               git -C ../go-src push upstream generated/go 2> /dev/null
             fi
