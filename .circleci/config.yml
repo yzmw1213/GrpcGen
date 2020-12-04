@@ -55,9 +55,12 @@ jobs:
           name: git commit go-src
           command: |
             if [ `git branch -r --list origin/master | wc -l` -eq 1 ]; then
+
               echo "checkout master"
               git fetch origin
+              echo 61
               git worktree add -b master ../go-src origin/master
+              echo 63
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
               echo "create master"
@@ -72,7 +75,7 @@ jobs:
             result=0
             git -C ../go-src commit -m "AUTO GENERATED [ci skip]" || result=$?
             if [ $result -eq 0 ]; then
-              git -C ../go-src push upstream master 2> /dev/null
+              git -C ../go-src push upstream go_postservice 2> /dev/null
             fi
 # Orchestrate or schedule a set of jobs
 workflows:
