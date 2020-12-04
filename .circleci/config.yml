@@ -54,18 +54,17 @@ jobs:
       - run:
           name: git commit go-src
           command: |
-            if [ `git branch -r --list origin/master | wc -l` -eq 1 ]; then
-
-              echo "checkout master"
+            if [ `git branch -r --list origin/develop | wc -l` -eq 1 ]; then
+              echo "checkout develop"
               git fetch origin
               echo 61
-              git worktree add master ../go-src origin/master
+              git worktree add develop ../go-src origin/develop
               echo 63
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
-              echo "create master"
+              echo "create develop"
               git worktree add --detach ../go-src
-              git -C ../go-src checkout --orphan master
+              git -C ../go-src checkout --orphan develop
               git -C ../go-src rm --cached -r .
               git -C ../go-src clean -d -f
             fi
@@ -94,3 +93,7 @@ workflows:
         requires:
           - lint
           - build
+        # filters:
+        #   branches:
+        #     only:
+        #       - master
