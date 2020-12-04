@@ -59,7 +59,7 @@ jobs:
               echo "checkout master"
               git fetch origin
               echo 61
-              git worktree add -b master ../go-src origin/master
+              git worktree add master ../go-src origin/master
               echo 63
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
