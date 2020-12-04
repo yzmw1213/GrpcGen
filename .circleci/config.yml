@@ -58,7 +58,7 @@ jobs:
               echo "checkout develop"
               git fetch origin
               echo 61
-              git worktree add ../go-src origin/develop
+              git worktree add -b postservice_go/* ../go-src origin/develop
               echo 63
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
@@ -75,6 +75,8 @@ jobs:
             result=0
             echo 76
             git -C ../go-src commit -m "AUTO GENERATED [ci skip]" || result=$?
+            echo result
+            echo $result
             if [ $result -eq 0 ]; then
               git -C ../go-src push upstream develop 2> /dev/null
             fi
