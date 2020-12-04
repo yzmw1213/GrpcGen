@@ -58,7 +58,7 @@ jobs:
               echo "checkout develop"
               git fetch origin
               echo 61
-              git worktree add -b postservice_go/* ../go-src origin/develop
+              git worktree add ../go-src origin/develop
               echo 63
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
