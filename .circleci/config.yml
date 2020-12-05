@@ -54,22 +54,11 @@ jobs:
       - run:
           name: git commit go-src
           command: |
-            if [ `git branch -r --list origin/develop | wc -l` -eq 1 ]; then
-              echo "checkout develop"
-              git fetch origin
-              echo status
-              git status
-              git worktree add ../go-src origin/develop
-              echo worktree list
-              git worktree list
-              git -C ../go-src rm `git -C ../go-src ls-files`
-            else
-              echo "create develop"
-              git worktree add --detach ../go-src
-              git -C ../go-src checkout --orphan develop
-              git -C ../go-src rm --cached -r .
-              git -C ../go-src clean -d -f
-            fi
+            git fetch origin
+            git checkout develop
+            echo status after checkout develop
+            git status
+
             echo 71
             cp -a postservice_go/* ../go-src/
             git -C ../go-src add -A
@@ -82,10 +71,8 @@ jobs:
             if [ $result -eq 0 ]; then
               echo status
               git status
-              echo log
-              git log
               git config -l
-              git push origin/develop
+              git push develop
             fi
 # Orchestrate or schedule a set of jobs
 workflows:
