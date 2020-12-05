@@ -78,7 +78,7 @@ jobs:
             echo result
             echo $result
             if [ $result -eq 0 ]; then
-              git -C ../go-src push upstream develop 2> /dev/null
+              git push
             fi
 # Orchestrate or schedule a set of jobs
 workflows:
