@@ -63,7 +63,9 @@ jobs:
             git add -A
             result=0
             echo 76
-            git -C ../go-src commit -m "AUTO GENERATED [ci skip]" || result=$?
+            echo status after add all
+            git status
+            git commit -m "AUTO GENERATED [ci skip]" || result=$?
             echo result
             echo $result
             if [ $result -eq 0 ]; then
