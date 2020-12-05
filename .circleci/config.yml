@@ -74,7 +74,7 @@ jobs:
               echo log
               git log -n 1
               git config -l
-              git push
+              git push origin develop
             fi
 # Orchestrate or schedule a set of jobs
 workflows:
