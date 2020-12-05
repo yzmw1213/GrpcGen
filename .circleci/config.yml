@@ -71,8 +71,10 @@ jobs:
             if [ $result -eq 0 ]; then
               echo status
               git status
+              echo log
+              git log -n 1
               git config -l
-              git push develop
+              git push
             fi
 # Orchestrate or schedule a set of jobs
 workflows:
