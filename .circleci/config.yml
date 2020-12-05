@@ -78,6 +78,8 @@ jobs:
             echo result
             echo $result
             if [ $result -eq 0 ]; then
+              git status
+              git config -l
               git push
             fi
 # Orchestrate or schedule a set of jobs
