@@ -60,9 +60,15 @@ jobs:
               echo status
               git status
               git worktree add ../go-src origin/develop
-              echo 63
+              echo worktree list
+              git worktree list
               git -C ../go-src rm `git -C ../go-src ls-files`
             else
+              echo "create develop"
+              git worktree add --detach ../go-src
+              git -C ../go-src checkout --orphan develop
+              git -C ../go-src rm --cached -r .
+              git -C ../go-src clean -d -f
             fi
             echo 71
             cp -a postservice_go/* ../go-src/
